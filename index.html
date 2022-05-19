@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/main.chunk.css" />
+    <title>Ontology Node DApp</title>
+    <script>
+      (function (doc, win) {
+        var docEl = doc.documentElement,
+          resizeEvt =
+            "orientationchange" in window ? "orientationchange" : "resize",
+          recalc = function () {
+            var clientWidth = docEl.clientWidth > 750 ? 750 : docEl.clientWidth;
+            if (!clientWidth) {
+              return;
+            }
+            docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
+          };
+
+        recalc();
+
+        if (!doc.addEventListener) return;
+
+        win.addEventListener(resizeEvt, recalc, false);
+
+        doc.addEventListener("DOMContentLoaded", recalc, false);
+      })(document, window);
+    </script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <!-- <script type="module">
+    import { Buffer } from "buffer";
+    window.Buffer = Buffer;
+  </script> -->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
