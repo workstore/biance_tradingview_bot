@@ -22,17 +22,105 @@
         </div>
       </div>
     </div>
-    <label class="form-button" for="ownWallet" style="position: relative"
-      ><span>CONNECT WALLET</span>
+    <label
+      class="form-button"
+      :class="gotAccount ? 'active' : ''"
+      for="ownWallet"
+      @click="connectWallet"
+      ><span>{{ connectText }}</span>
+      <img
+        v-if="gotAccount"
+        src="../../assets/images/close.svg"
+        class="close"
+        alt=""
+        @click.exact.stop="disconnect"
+      />
     </label>
   </div>
 </template>
+
+<script setup>
+import { watch, onMounted, ref, computed } from "vue";
+// import { WalletType } from "@/types/provider";
+
+const connectType = ref("ether");
+const accountName = ref("");
+
+const connectText = computed(() => {
+  if (accountName.value === "") {
+    return "CONNECT WALLET";
+  }
+  const prefix = accountName.value.slice(0, 4);
+  const middle = "...";
+  const last = accountName.value.slice(
+    accountName.value.length - 4,
+    accountName.value.length
+  );
+  return `${prefix}${middle}${last}`;
+});
+
+const gotAccount = computed(() => {
+  return accountName.value !== "";
+});
+
+const getProvider = (providerType) => {
+  const map = {
+    ether: window.ethereum,
+    // onto: window.onto,
+    // "Web3.givenProvider": Web3.givenProvider,
+  };
+  // TODO alert if wallet not installed
+  return map[providerType];
+};
+
+const metaMaskConnect = async (provider) => {
+  if (!provider.isConnected()) {
+    // connect first
+    try {
+      const [acc] = await provider.request({ method: "eth_requestAccounts" });
+      accountName.value = acc;
+    } catch (error) {
+      if (error.code === 4001) {
+        // EIP-1193 userRejectedRequest error
+        console.log("Please connect to MetaMask.");
+      }
+    }
+  }
+  try {
+    const chainId = await provider.request({ method: "eth_chainId" });
+    if (chainId !== "0x4") {
+      // show error or swtich
+      const result = await provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x4" }],
+      });
+    }
+    const [acc] = await provider.request({ method: "eth_requestAccounts" });
+    accountName.value = acc;
+    console.log("debug matamask provider", acc[0]);
+  } catch (error) {
+    console.log("MetaMask error.", error);
+  }
+};
+
+const connectWallet = async () => {
+  const provider = getProvider(connectType.value);
+  if (connectType.value === "ether") {
+    await metaMaskConnect(provider);
+  }
+};
+
+const disconnect = async () => {
+  accountName.value = "";
+};
+</script>
 
 <style lang="scss" scoped>
 .form-header-section {
   padding-bottom: 30px;
 }
 .form-button {
+  position: relative;
   color: #15092c;
   cursor: pointer;
   -webkit-user-select: none;
@@ -49,5 +137,17 @@
   justify-content: center;
   text-transform: uppercase;
   font-family: "Open Sans Semibold";
+  &.active {
+    background: #000;
+    color: #fff;
+  }
+}
+
+.close {
+  filter: invert(100%);
+  color: black;
+  position: absolute;
+  left: 89%;
+  width: 16px;
 }
 </style>
