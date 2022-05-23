@@ -1,4 +1,5 @@
 <template>
+  <h5>hash {{ imageHash }} address: {{ address }}</h5>
   <div class="checkbox-section" style="cursor: default">
     <label class="checkbox-container" style="position: relative"
       >Enable
@@ -56,3 +57,25 @@
     </button>
   </div>
 </template>
+<script setup>
+import { ethers } from "ethers";
+import threeDXAbi from "@/api/ThreeDX.json";
+import { useFormStore } from "@/store/index";
+
+const { imageHash } = useFormStore();
+
+const threeDXContractAddress = "";
+
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+const mint = async () => {
+  const threeDXContact = new ethers.Contract(
+    threeDXContractAddress,
+    threeDXAbi.abi,
+    provider
+  ).connect(provider);
+  const image = "ipfs_cid";
+  const tx = await threeDXContact.mint(image);
+  tx.wait();
+};
+</script>

@@ -26,7 +26,7 @@
       class="form-button"
       :class="gotAccount ? 'active' : ''"
       for="ownWallet"
-      @click="connectWallet"
+      @click="dialogVisible = true"
       ><span>{{ connectText }}</span>
       <img
         v-if="gotAccount"
@@ -36,27 +36,52 @@
         @click.exact.stop="disconnect"
       />
     </label>
+    <ElDialog v-model="dialogVisible" width="460px" center>
+      <template #title><span class="header">Select Wallet!</span></template>
+      <SelectConnect
+        @open="wdialogVisible = true"
+        @close="
+          (name) => {
+            dialogVisible = false;
+            accountName = name;
+          }
+        "
+      ></SelectConnect>
+      <template #footer></template>
+    </ElDialog>
+    <!-- <ElDialog v-model="wdialogVisible" width="460px" center>
+      <WalletModal @close="wdialogVisible = false"></WalletModal>
+      <template #footer></template>
+    </ElDialog> -->
   </div>
 </template>
 
 <script setup>
 import { watch, onMounted, ref, computed } from "vue";
+import { ElDialog } from "element-plus";
+import SelectConnect from "@/components/SelectConnect.vue";
+import WalletModal from "./WalletModal.vue";
 // import { WalletType } from "@/types/provider";
 
 const connectType = ref("ether");
 const accountName = ref("");
+const dialogVisible = ref(false);
+const wdialogVisible = ref(false);
 
 const connectText = computed(() => {
   if (accountName.value === "") {
     return "CONNECT WALLET";
   }
-  const prefix = accountName.value.slice(0, 4);
-  const middle = "...";
-  const last = accountName.value.slice(
-    accountName.value.length - 4,
-    accountName.value.length
-  );
-  return `${prefix}${middle}${last}`;
+  if (accountName.value.length > 4) {
+    const prefix = accountName.value.slice(0, 4);
+    const middle = "...";
+    const last = accountName.value.slice(
+      accountName.value.length - 4,
+      accountName.value.length
+    );
+    return `${prefix}${middle}${last}`;
+  }
+  return accountName.value;
 });
 
 const gotAccount = computed(() => {
@@ -73,41 +98,41 @@ const getProvider = (providerType) => {
   return map[providerType];
 };
 
-const metaMaskConnect = async (provider) => {
-  if (!provider.isConnected()) {
-    // connect first
-    try {
-      const [acc] = await provider.request({ method: "eth_requestAccounts" });
-      accountName.value = acc;
-    } catch (error) {
-      if (error.code === 4001) {
-        // EIP-1193 userRejectedRequest error
-        console.log("Please connect to MetaMask.");
-      }
-    }
-  }
-  try {
-    const chainId = await provider.request({ method: "eth_chainId" });
-    if (chainId !== "0x4") {
-      // show error or swtich
-      const result = await provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x4" }],
-      });
-    }
-    const [acc] = await provider.request({ method: "eth_requestAccounts" });
-    accountName.value = acc;
-    console.log("debug matamask provider", acc[0]);
-  } catch (error) {
-    console.log("MetaMask error.", error);
-  }
-};
+// const metaMaskConnect = async (provider) => {
+//   if (!provider.isConnected()) {
+//     // connect first
+//     try {
+//       const [acc] = await provider.request({ method: "eth_requestAccounts" });
+//       accountName.value = acc;
+//     } catch (error) {
+//       if (error.code === 4001) {
+//         // EIP-1193 userRejectedRequest error
+//         console.log("Please connect to MetaMask.");
+//       }
+//     }
+//   }
+//   try {
+//     const chainId = await provider.request({ method: "eth_chainId" });
+//     if (chainId !== "0x4") {
+//       // show error or swtich
+//       const result = await provider.request({
+//         method: "wallet_switchEthereumChain",
+//         params: [{ chainId: "0x4" }],
+//       });
+//     }
+//     const [acc] = await provider.request({ method: "eth_requestAccounts" });
+//     accountName.value = acc;
+//     console.log("debug matamask provider", acc[0]);
+//   } catch (error) {
+//     console.log("MetaMask error.", error);
+//   }
+// };
 
 const connectWallet = async () => {
   const provider = getProvider(connectType.value);
-  if (connectType.value === "ether") {
-    await metaMaskConnect(provider);
-  }
+  // if (connectType.value === "ether") {
+  //   await metaMaskConnect(provider);
+  // }
 };
 
 const disconnect = async () => {
@@ -149,5 +174,13 @@ const disconnect = async () => {
   position: absolute;
   left: 89%;
   width: 16px;
+}
+
+.header {
+  text-align: center;
+  font-family: WhyteInktrapRegular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
 }
 </style>

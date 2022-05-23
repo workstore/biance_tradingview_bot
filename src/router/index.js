@@ -1,7 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { StorageKeys } from "@/types/storage";
+import { createRouter, createWebHistory } from "vue-router";
 
-const routes: RouteRecordRaw[] = [
+const routes = [
   {
     path: "/",
     name: "Home",
@@ -23,7 +22,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.role === "user") {
-    if (!sessionStorage.getItem(StorageKeys.Token)) {
+    if (!sessionStorage.getItem("user-token")) {
       next("/");
       return;
     }

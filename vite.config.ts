@@ -6,8 +6,33 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import path from "path";
+import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
+import NodePolyfills from "rollup-plugin-node-polyfills";
 
 export default defineConfig({
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: "globalThis",
+      },
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          buffer: true,
+        }),
+      ],
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [NodePolyfills()],
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
+  server: {
+    cors: true,
+  },
   plugins: [
     vue(),
     vueI18n({
@@ -24,10 +49,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": "/src",
-      process: "process/browser",
-      stream: "stream-browserify",
-      zlib: "browserify-zlib",
-      util: "util",
     },
   },
 });
