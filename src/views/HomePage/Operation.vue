@@ -1,5 +1,5 @@
 <template>
-  <h5>hash {{ imageHash }} address: {{ address }}</h5>
+  <h5>hash {{ imageHash }} address: {{ wallet }}</h5>
   <div class="checkbox-section" style="cursor: default">
     <label class="checkbox-container" style="position: relative"
       >Enable
@@ -51,7 +51,7 @@
     <button
       type="submit"
       class="form-button single-button"
-      style="color: black; background: white; opacity: 0.3"
+      @click="handleCallContract"
     >
       Continue
     </button>
@@ -61,21 +61,62 @@
 import { ethers } from "ethers";
 import threeDXAbi from "@/api/ThreeDX.json";
 import { useFormStore } from "@/store/index";
+import { onMounted } from "vue";
+import { ThreeDX_Contract_Address } from "@/utils/globalConfig.json";
 
-const { imageHash } = useFormStore();
-
-const threeDXContractAddress = "";
+const { imageHash, wallet } = useFormStore();
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
 
 const mint = async () => {
   const threeDXContact = new ethers.Contract(
-    threeDXContractAddress,
+    ThreeDX_Contract_Address,
     threeDXAbi.abi,
     provider
-  ).connect(provider);
-  const image = "ipfs_cid";
+  ).connect(signer);
+  const image = imageHash;
+  // const image = "ipfs_cid";
+  console.log(
+    "debug call contract",
+    signer,
+    threeDXContact.address,
+    threeDXContact.signer,
+    threeDXContact.provider
+    // ThreeDX_Contract_Address,
+    // threeDXAbi.abi,
+    // provider,
+    // signer
+  );
   const tx = await threeDXContact.mint(image);
   tx.wait();
 };
+
+const validateForm = () => {
+  let r = false;
+  if (!imageHash.value || !wallet.value) {
+    return r;
+  }
+  r = true;
+  return r;
+};
+
+const handleCallContract = async () => {
+  console.log(
+    "debug env",
+    ThreeDX_Contract_Address,
+    imageHash,
+    wallet,
+    validateForm()
+  );
+  if (validateForm()) {
+    try {
+      await mint();
+    } catch (error) {
+      console.log("debug error", error);
+    }
+  }
+};
+
+onMounted(() => {});
 </script>

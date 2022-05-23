@@ -44,6 +44,7 @@
           (name) => {
             dialogVisible = false;
             accountName = name;
+            updateWallet(name);
           }
         "
       ></SelectConnect>
@@ -60,8 +61,11 @@
 import { watch, onMounted, ref, computed } from "vue";
 import { ElDialog } from "element-plus";
 import SelectConnect from "@/components/SelectConnect.vue";
+import { useFormStore } from "@/store/index";
 import WalletModal from "./WalletModal.vue";
 // import { WalletType } from "@/types/provider";
+
+const { updateWallet } = useFormStore();
 
 const connectType = ref("ether");
 const accountName = ref("");

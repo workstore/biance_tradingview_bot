@@ -57,7 +57,7 @@
     ref="uploadRef"
     drag
     class="upload-demo"
-    action="https://api.pinata.cloud/pinning/pinFileToIPFS/"
+    :action="PINATA_UPLOAD"
     :auto-upload="true"
     :show-file-list="false"
     :headers="headers"
@@ -82,39 +82,18 @@
     </template>
   </ElUpload>
   <!--  -->
-  <!-- <label class="custom-file-upload" tabindex="0"
-    ><input
-      multiple="true"
-      type="file"
-      autocomplete="off"
-      tabindex="-1"
-      name="file"
-      style="display: none"
-    />
-    <div class="custom-fiile-content-container">
-      <img
-        class="custom-file-icon"
-        src="../../assets/images/cloud_upload_24px.svg"
-        alt="icon"
-      />
-      <p class="custom-file-title" @click="open">
-        Drag and drop or
-        <span class="custom-file-title--accent">select from drive</span>
-      </p>
-    </div>
-  </label> -->
   <div v-if="loading" class="custom-file-upload">
     <div
       style="display: flex; justify-content: space-between; align-items: center"
     >
       <div style="display: flex; align-items: center">
-        <!-- <div class="file-thumbnail-image-container">
-          <img
+        <div v-show="false" class="file-thumbnail-image-container">
+          <!-- <img
             class="file-thumbnail-img"
             src="../../assets/images/close.svg"
             alt="img"
-          />
-        </div> -->
+          /> -->
+        </div>
         <span class="file-thumbnail-title"
           ><p>{{ fileName }}</p></span
         >
@@ -206,16 +185,19 @@
 <script setup>
 import { onMounted, ref, reactive, watch } from "vue";
 import { useFormStore } from "@/store/index";
+import {
+  PINATA_KEY,
+  PINATA_SECRET_KEY,
+  PINATA_UPLOAD,
+} from "@/utils/globalConfig.json";
 
-// const { VAIT_APP_PINATA_KEY, VAIT_APP_PINATA_SECRET_KEY } = import.meta.env;
 const { updateHash } = useFormStore();
 
 const uploadRef = ref(null);
 const loading = ref(false);
 const headers = reactive({
-  pinata_api_key: "523a8739ae6e8c1d0dcc",
-  pinata_secret_api_key:
-    "c3d03fd9d4a10c5482581dc75bb6177e6fa00d3d260a11aacacd218f111a46ea",
+  pinata_api_key: PINATA_KEY,
+  pinata_secret_api_key: PINATA_SECRET_KEY,
 });
 // upload
 const thumbnail = ref("../../assets/images/close.svg");
@@ -232,7 +214,7 @@ const handleProgress = (e, file) => {
 };
 
 const handleSuccess = (response, file) => {
-  loading.value = false;
+  // loading.value = false;
   const { IpfsHash, PinSize, Timestamp } = response;
   const {
     name,

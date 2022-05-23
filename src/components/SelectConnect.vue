@@ -51,6 +51,10 @@ import { useI18n } from "vue-i18n";
 // import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
+import {
+  Wallet_Connect_Bridge,
+  Wallet_Connect_InfuraId,
+} from "@/utils/globalConfig.json";
 
 const { t } = useI18n();
 const emit = defineEmits(["open", "close"]);
@@ -121,11 +125,11 @@ const handleMask = async () => {
 const handleWallet = async () => {
   clearMsg();
   // bridge url
-  const bridge = "https://bridge.walletconnect.org";
+  const bridge = Wallet_Connect_Bridge;
   try {
     // create new connector
     const connector = new WalletConnect({
-      infuraId: "2276db04f61124317029c1c295e2d761",
+      infuraId: Wallet_Connect_InfuraId,
       bridge,
       qrcodeModal: QRCodeModal,
     });
@@ -150,10 +154,10 @@ const handleWallet = async () => {
     accountName.value = acc;
     emit("close", accountName.value);
     //
-    connector.on("display_uri", (err, payload) => {
-      const uri = payload.params[0];
-      console.log("test uri", uri);
-    });
+    // connector.on("display_uri", (err, payload) => {
+    //   const uri = payload.params[0];
+    //   console.log("test uri", uri);
+    // });
   } catch (error) {
     errorMsgw.value = error.message;
   }

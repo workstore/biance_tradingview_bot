@@ -83,7 +83,7 @@ color.value = "#071215";
 const { t } = useI18n();
 
 const dialogVisible = ref(true);
-const progress = ref(0);
+const progress = ref(20);
 
 onBeforeMount(() => {
   const test = "QmZbL66ACWvwANBvwcyfufEhzTjg1sMYR9fY69AU253Bnv";

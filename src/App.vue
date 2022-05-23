@@ -14,6 +14,7 @@
 }
 </style>
 
-<!-- <style lang="scss"> -->
-// @import "./styles/index.scss"; // @import "element-plus/dist/index.css";
-<!-- </style> -->
+<style lang="scss">
+// @import "./styles/index.scss";
+@import "element-plus/dist/index.css";
+</style>
