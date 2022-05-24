@@ -34,7 +34,7 @@ export default defineConfig({
     cors: true,
   },
   preview: {
-    port: 8080,
+    port: 80,
   },
   plugins: [
     vue(),
