@@ -33,6 +33,9 @@ export default defineConfig({
   server: {
     cors: true,
   },
+  preview: {
+    port: 8080,
+  },
   plugins: [
     vue(),
     vueI18n({
