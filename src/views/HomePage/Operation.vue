@@ -1,5 +1,4 @@
 <template>
-  <h5>hash {{ imageHash }} address: {{ wallet }}</h5>
   <div class="checkbox-section" style="cursor: default">
     <label class="checkbox-container" style="position: relative"
       >Enable
@@ -25,12 +24,13 @@
     <div class="checkbox-section" style="cursor: default">
       <label class="checkbox-container" style="position: relative"
         >I verify that I have the legal rights to mint this NFT<input
+          v-model="checked"
           name="rigthsVerifiaction"
           type="checkbox" /><span class="checkmark check-area"></span
       ></label>
     </div>
   </div>
-  <div>
+  <div v-if="checked">
     <p
       style="
         font-size: 12px;
@@ -47,8 +47,11 @@
       out of any breach of the representation and warranty contained herein.
     </p>
   </div>
+  <h5>{{ wallet }}</h5>
   <div class="button-container button-container--left-placed">
     <button
+      :disabled="!validateForm()"
+      :class="!validateForm() ? 'disable' : ''"
       type="submit"
       class="form-button single-button"
       @click="handleCallContract"
@@ -61,40 +64,41 @@
 import { ethers } from "ethers";
 import threeDXAbi from "@/api/ThreeDX.json";
 import { useFormStore } from "@/store/index";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { ThreeDX_Contract_Address } from "@/utils/globalConfig.json";
 
-const { imageHash, wallet } = useFormStore();
+const { imageHash, wallet, updateMinted } = useFormStore();
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
+const checked = ref(false);
 
 const mint = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
   const threeDXContact = new ethers.Contract(
     ThreeDX_Contract_Address,
     threeDXAbi.abi,
     provider
   ).connect(signer);
   const image = imageHash;
-  // const image = "ipfs_cid";
-  console.log(
-    "debug call contract",
-    signer,
-    threeDXContact.address,
-    threeDXContact.signer,
-    threeDXContact.provider
-    // ThreeDX_Contract_Address,
-    // threeDXAbi.abi,
-    // provider,
-    // signer
-  );
   const tx = await threeDXContact.mint(image);
   tx.wait();
+  // console.log(
+  //   "debug call contract",
+  //   signer,
+  //   threeDXContact.address,
+  //   threeDXContact.signer,
+  //   threeDXContact.provider,
+  //   tx
+  //   // ThreeDX_Contract_Address,
+  //   // threeDXAbi.abi,
+  //   // provider,
+  //   // signer
+  // );
 };
 
 const validateForm = () => {
   let r = false;
-  if (!imageHash.value || !wallet.value) {
+  if (!imageHash.value || !wallet.value || !window.ethereum) {
     return r;
   }
   r = true;
@@ -112,6 +116,7 @@ const handleCallContract = async () => {
   if (validateForm()) {
     try {
       await mint();
+      updateMinted(false);
     } catch (error) {
       console.log("debug error", error);
     }
@@ -120,3 +125,10 @@ const handleCallContract = async () => {
 
 onMounted(() => {});
 </script>
+<style lang="scss" scoped>
+.disable {
+  color: black;
+  background: white;
+  opacity: 0.3;
+}
+</style>

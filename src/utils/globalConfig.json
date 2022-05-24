@@ -6,5 +6,6 @@
   "PINATA_UPLOAD": "https://api.pinata.cloud/pinning/pinFileToIPFS/",
   "ThreeDX_Contract_Address": "0xf17FD11EB21a79E44Aa46F334d590B6a1529eFDa",
   "Wallet_Connect_Bridge": "https://bridge.walletconnect.org",
-  "Wallet_Connect_InfuraId": "2276db04f61124317029c1c295e2d761"
+  "Wallet_Connect_InfuraId": "2276db04f61124317029c1c295e2d761",
+  "Wallet_Target_ChainId": 4
 }

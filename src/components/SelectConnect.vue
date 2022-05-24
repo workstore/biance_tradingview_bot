@@ -5,14 +5,16 @@
         class="sc-dlnjwi dJXsSm"
         style="position: absolute; font-size: 10px; color: red"
         >{{ errorMsg }}</span
-      ><span style="padding-left: 20px">Metamask</span
+      ><span style="padding-left: 20px">{{
+        isMetamaskInstalled ? "Metamask" : " Install Metamask"
+      }}</span
       ><img
         src="../assets/images/metamask.svg"
         alt="metamask"
         style="width: 43px; padding-right: 20px"
       />
     </div>
-    <div id="connectWallet" class="sc-gtsrHT gfuSqG" @click="handleWallet">
+    <!-- <div id="connectWallet" class="sc-gtsrHT gfuSqG" @click="handleWallet">
       <span
         class="sc-dlnjwi dJXsSm"
         style="position: absolute; font-size: 10px; color: red"
@@ -23,7 +25,7 @@
         alt="walletconnect"
         style="width: 43px; margin-right: 10px"
       />
-    </div>
+    </div> -->
     <!-- <div id="ledger" class="sc-gtsrHT gfuSqG" @click="handleLedger">
       <span
         class="sc-dlnjwi dJXsSm"
@@ -54,7 +56,11 @@ import QRCodeModal from "@walletconnect/qrcode-modal";
 import {
   Wallet_Connect_Bridge,
   Wallet_Connect_InfuraId,
+  Wallet_Target_ChainId,
 } from "@/utils/globalConfig.json";
+import { useFormStore } from "@/store/index";
+
+const { updateWallet } = useFormStore();
 
 const { t } = useI18n();
 const emit = defineEmits(["open", "close"]);
@@ -65,7 +71,10 @@ const errorMsg = ref("");
 const errorMsgw = ref("");
 const errorMsgl = ref("");
 const accountName = ref("");
-const chanidMsg = "Unsupported chain id: 1. Supported chain ids are: 4.";
+const chanidMsg = (id) =>
+  `Unsupported chain id: ${Number(
+    id
+  )}. Supported chain ids are: ${Wallet_Target_ChainId}.`;
 
 const isEqRinbeky = (value) => {
   return Number(value) === 4;
@@ -107,7 +116,7 @@ const handleMask = async () => {
       //   method: "wallet_switchEthereumChain",
       //   params: [{ chainId: "0x4" }],
       // });
-      errorMsg.value = chanidMsg;
+      errorMsg.value = chanidMsg(chainId);
       return;
     }
     const [acc] = await window.ethereum.request({
@@ -115,10 +124,14 @@ const handleMask = async () => {
     });
     accountName.value = acc;
     emit("close", accountName.value);
+    window.ethereum.on("chainChanged", (chainId) => {
+      accountName.value = "";
+      updateWallet("");
+    });
     // console.log("debug connect", cnc, isMetamaskInstalled, accountName.value);
   } catch (error) {
     errorMsg.value = error.message;
-    console.log("MetaMask error.", error);
+    // console.log("MetaMask error.", error);
   }
 };
 
@@ -138,16 +151,16 @@ const handleWallet = async () => {
       // create new session
       await connector.createSession();
     }
-    console.log(
-      "debug conne",
-      connector,
-      connector.connected,
-      connector.chainId,
-      connector.accounts,
-      isEqRinbeky(connector.chainId)
-    );
+    // console.log(
+    //   "debug conne",
+    //   connector,
+    //   connector.connected,
+    //   connector.chainId,
+    //   connector.accounts,
+    //   isEqRinbeky(connector.chainId)
+    // );
     if (!isEqRinbeky(connector.chainId)) {
-      errorMsgw.value = chanidMsg;
+      errorMsgw.value = chanidMsg(connector.chainId);
       return;
     }
     const [acc] = connector.accounts;

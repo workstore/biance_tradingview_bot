@@ -4,9 +4,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-// import { watch, onMounted, ref } from "vue";
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 .main-container {
@@ -15,6 +13,5 @@
 </style>
 
 <style lang="scss">
-// @import "./styles/index.scss";
 @import "element-plus/dist/index.css";
 </style>

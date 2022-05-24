@@ -40,20 +40,10 @@
       <template #title><span class="header">Select Wallet!</span></template>
       <SelectConnect
         @open="wdialogVisible = true"
-        @close="
-          (name) => {
-            dialogVisible = false;
-            accountName = name;
-            updateWallet(name);
-          }
-        "
+        @close="handleClose"
       ></SelectConnect>
       <template #footer></template>
     </ElDialog>
-    <!-- <ElDialog v-model="wdialogVisible" width="460px" center>
-      <WalletModal @close="wdialogVisible = false"></WalletModal>
-      <template #footer></template>
-    </ElDialog> -->
   </div>
 </template>
 
@@ -62,10 +52,8 @@ import { watch, onMounted, ref, computed } from "vue";
 import { ElDialog } from "element-plus";
 import SelectConnect from "@/components/SelectConnect.vue";
 import { useFormStore } from "@/store/index";
-import WalletModal from "./WalletModal.vue";
-// import { WalletType } from "@/types/provider";
 
-const { updateWallet } = useFormStore();
+const { updateWallet, wallet } = useFormStore();
 
 const connectType = ref("ether");
 const accountName = ref("");
@@ -73,74 +61,42 @@ const dialogVisible = ref(false);
 const wdialogVisible = ref(false);
 
 const connectText = computed(() => {
-  if (accountName.value === "") {
+  if (wallet.value === "") {
     return "CONNECT WALLET";
   }
-  if (accountName.value.length > 4) {
-    const prefix = accountName.value.slice(0, 4);
+  if (wallet.value.length > 4) {
+    const prefix = wallet.value.slice(0, 4);
     const middle = "...";
-    const last = accountName.value.slice(
-      accountName.value.length - 4,
-      accountName.value.length
+    const last = wallet.value.slice(
+      wallet.value.length - 4,
+      wallet.value.length
     );
     return `${prefix}${middle}${last}`;
   }
-  return accountName.value;
+  return wallet.value;
 });
 
 const gotAccount = computed(() => {
-  return accountName.value !== "";
+  return wallet.value !== "";
 });
 
-const getProvider = (providerType) => {
-  const map = {
-    ether: window.ethereum,
-    // onto: window.onto,
-    // "Web3.givenProvider": Web3.givenProvider,
-  };
-  // TODO alert if wallet not installed
-  return map[providerType];
-};
-
-// const metaMaskConnect = async (provider) => {
-//   if (!provider.isConnected()) {
-//     // connect first
-//     try {
-//       const [acc] = await provider.request({ method: "eth_requestAccounts" });
-//       accountName.value = acc;
-//     } catch (error) {
-//       if (error.code === 4001) {
-//         // EIP-1193 userRejectedRequest error
-//         console.log("Please connect to MetaMask.");
-//       }
-//     }
-//   }
-//   try {
-//     const chainId = await provider.request({ method: "eth_chainId" });
-//     if (chainId !== "0x4") {
-//       // show error or swtich
-//       const result = await provider.request({
-//         method: "wallet_switchEthereumChain",
-//         params: [{ chainId: "0x4" }],
-//       });
-//     }
-//     const [acc] = await provider.request({ method: "eth_requestAccounts" });
-//     accountName.value = acc;
-//     console.log("debug matamask provider", acc[0]);
-//   } catch (error) {
-//     console.log("MetaMask error.", error);
-//   }
+// const getProvider = (providerType) => {
+//   const map = {
+//     ether: window.ethereum,
+//   };
+//   // TODO alert if wallet not installed
+//   return map[providerType];
 // };
 
-const connectWallet = async () => {
-  const provider = getProvider(connectType.value);
-  // if (connectType.value === "ether") {
-  //   await metaMaskConnect(provider);
-  // }
+const handleClose = async (name) => {
+  dialogVisible.value = false;
+  // wallet.value = name;
+  updateWallet(name);
 };
 
 const disconnect = async () => {
-  accountName.value = "";
+  // accountName.value = "";
+  updateWallet("");
 };
 </script>
 

@@ -4,20 +4,35 @@ import { createGlobalState, useSessionStorage } from "@vueuse/core";
 import { createInjectionState } from "@vueuse/shared";
 
 const [useProviderFormStore, useFormStore] = createInjectionState(
-  (IpfsHash: string, address: string) => {
+  (IpfsHash, address) => {
     // state
-    const imageHash = ref<string>(IpfsHash || "");
+    const imageHash = ref(IpfsHash || "");
 
-    const wallet = ref<string>(address || "");
+    const wallet = ref(address || "");
 
-    const updateHash = (hash: string) => {
+    // loading
+    const minted = ref(false);
+
+    const updateHash = (hash) => {
       imageHash.value = hash;
     };
 
-    const updateWallet = (addrHex: string) => {
+    const updateWallet = (addrHex) => {
       wallet.value = addrHex;
     };
-    return { imageHash, wallet, updateHash, updateWallet };
+
+    const updateMinted = (bool) => {
+      minted.value = bool;
+    };
+
+    return {
+      imageHash,
+      wallet,
+      updateHash,
+      updateWallet,
+      minted,
+      updateMinted,
+    };
   }
 );
 

@@ -71,7 +71,6 @@ import { useI18n } from "vue-i18n";
 import { ref, onMounted, computed, onBeforeMount } from "vue";
 import WalletConnect from "@/views/HomePage/WalletConnect.vue";
 import NFTForm from "@/views/HomePage/NFTForm.vue";
-// import Progress from "@/views/HomePage/Progress.vue";
 import Operation from "@/views/HomePage/Operation.vue";
 import { useProviderFormStore } from "@/store/index";
 import { useCssVar } from "@vueuse/core";
@@ -79,19 +78,10 @@ import { useCssVar } from "@vueuse/core";
 const el = ref(null);
 const color = useCssVar("--el-color-primary", el);
 color.value = "#071215";
-
-const { t } = useI18n();
-
-const dialogVisible = ref(true);
 const progress = ref(20);
 
 onBeforeMount(() => {
-  const test = "QmZbL66ACWvwANBvwcyfufEhzTjg1sMYR9fY69AU253Bnv";
-  useProviderFormStore(test);
+  // const test = "QmZbL66ACWvwANBvwcyfufEhzTjg1sMYR9fY69AU253Bnv";
+  useProviderFormStore("");
 });
 </script>
-<!-- <style lang="scss" scoped>
-.slider-tip {
-  background: #fff;
-}
-</style> -->
