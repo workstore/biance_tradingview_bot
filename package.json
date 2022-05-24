@@ -6,7 +6,7 @@
     "dev:main": "vite --host --mode main",
     "build:stage": "vue-tsc --noEmit && vite build --mode stage",
     "build:main": "vue-tsc --noEmit && vite build --mode main",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "lint": "eslint --fix --ext \".js,.ts,.vue\" --ignore-path .gitignore src"
   },
   "dependencies": {
