@@ -79,7 +79,7 @@ const mint = async () => {
     threeDXAbi.abi,
     provider
   ).connect(signer);
-  const image = imageHash;
+  const image = imageHash.value;
   const tx = await threeDXContact.mint(image);
   tx.wait();
 };
@@ -96,7 +96,7 @@ const validateForm = () => {
 const handleCallContract = async () => {
   if (validateForm()) {
     try {
-      await mint();
+      const res = await mint();
       ElMessage({
         message: "Success!",
         type: "success",
