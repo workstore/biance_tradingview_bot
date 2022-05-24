@@ -47,7 +47,6 @@
       out of any breach of the representation and warranty contained herein.
     </p>
   </div>
-  <h5>{{ wallet }}</h5>
   <div class="button-container button-container--left-placed">
     <button
       :disabled="!validateForm()"
@@ -66,6 +65,7 @@ import threeDXAbi from "@/api/ThreeDX.json";
 import { useFormStore } from "@/store/index";
 import { onMounted, ref } from "vue";
 import { ThreeDX_Contract_Address } from "@/utils/globalConfig.json";
+// import { ElMessage } from "element-plus";
 
 const { imageHash, wallet, updateMinted } = useFormStore();
 
@@ -82,18 +82,6 @@ const mint = async () => {
   const image = imageHash;
   const tx = await threeDXContact.mint(image);
   tx.wait();
-  // console.log(
-  //   "debug call contract",
-  //   signer,
-  //   threeDXContact.address,
-  //   threeDXContact.signer,
-  //   threeDXContact.provider,
-  //   tx
-  //   // ThreeDX_Contract_Address,
-  //   // threeDXAbi.abi,
-  //   // provider,
-  //   // signer
-  // );
 };
 
 const validateForm = () => {
@@ -106,16 +94,13 @@ const validateForm = () => {
 };
 
 const handleCallContract = async () => {
-  console.log(
-    "debug env",
-    ThreeDX_Contract_Address,
-    imageHash,
-    wallet,
-    validateForm()
-  );
   if (validateForm()) {
     try {
       await mint();
+      ElMessage({
+        message: "Success!",
+        type: "success",
+      });
       updateMinted(false);
     } catch (error) {
       console.log("debug error", error);

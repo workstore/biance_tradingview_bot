@@ -242,7 +242,11 @@ const handleSuccess = (response, file) => {
 };
 
 const handleError = (error, files) => {
-  console.log("debug handleError", error, files);
+  ElMessage({
+    message: "Error!",
+    type: "error",
+  });
+  console.log("debug handleError", error);
 };
 
 const handleBefore = (args) => {
