@@ -112,12 +112,13 @@ const handleMask = async () => {
     const chainId = await window.ethereum.request({ method: "eth_chainId" });
     if (!isEqRinbeky(chainId)) {
       // show error or swtich
-      // const result = await window.ethereum.request({
-      //   method: "wallet_switchEthereumChain",
-      //   params: [{ chainId: "0x4" }],
-      // });
-      errorMsg.value = chanidMsg(chainId);
-      return;
+      const result = await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x4" }],
+      });
+      // errorMsg.value = chanidMsg(chainId);
+      errorMsg.value = "";
+      // return;
     }
     const [acc] = await window.ethereum.request({
       method: "eth_requestAccounts",
@@ -125,8 +126,10 @@ const handleMask = async () => {
     accountName.value = acc;
     emit("close", accountName.value);
     window.ethereum.on("chainChanged", (chainId) => {
-      accountName.value = "";
-      updateWallet("");
+      if (!isEqRinbeky(chainId)) {
+        accountName.value = "";
+        updateWallet("");
+      }
     });
     // console.log("debug connect", cnc, isMetamaskInstalled, accountName.value);
   } catch (error) {

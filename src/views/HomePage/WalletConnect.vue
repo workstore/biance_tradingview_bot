@@ -80,14 +80,6 @@ const gotAccount = computed(() => {
   return wallet.value !== "";
 });
 
-// const getProvider = (providerType) => {
-//   const map = {
-//     ether: window.ethereum,
-//   };
-//   // TODO alert if wallet not installed
-//   return map[providerType];
-// };
-
 const handleClose = async (name) => {
   dialogVisible.value = false;
   // wallet.value = name;

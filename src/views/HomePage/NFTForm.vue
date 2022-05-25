@@ -246,7 +246,6 @@ const handleError = (error, files) => {
     message: "Error!",
     type: "error",
   });
-  console.log("debug handleError", error);
 };
 
 const handleBefore = (args) => {
