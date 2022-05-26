@@ -1,6 +1,6 @@
 # scp  -r / diudevshare:/data
 git pull
 
-sudo yarn run build:main
+sudo npm run build:main
 
 npm run preview
