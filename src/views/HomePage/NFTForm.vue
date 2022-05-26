@@ -16,7 +16,7 @@
       style="margin-bottom: 20px"
     ></div>
     <div class="form-header-section">
-      <h2 class="form-header-title">NFT Details</h2>
+      <h2 class="form-header-title">3DShuttle NFT Details</h2>
       <p style="font-size: 14px; z-index: 0">
         This information will be visible on marketplaces.
       </p>
@@ -46,7 +46,9 @@
       </div>
     </div>
     <div class="label-input">
-      <h3 class="file-desc-title">Upload the NFT File</h3>
+      <h3 class="file-desc-title">
+        Upload a 3D file for your 3DShuttle NFT File
+      </h3>
       <p class="file-desc-text"></p>
     </div>
     <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
@@ -55,6 +57,7 @@
     v-show="!minted"
     ref="uploadRef"
     drag
+    accept=".glb,.fbx,.usd"
     class="upload-demo"
     :action="PINATA_UPLOAD"
     :auto-upload="true"

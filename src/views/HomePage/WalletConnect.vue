@@ -14,10 +14,9 @@
             style="width: 13px"
           />
           <p style="width: 350px; right: 0px">
-            Are you new to crypto and don't have a wallet yet? No worries! We
-            are working on enabling you to use USD, where CXIP will create a
-            unique wallet for you that will only work with your account (coming
-            soon).
+            "Currently we only support Metamask wallets on PC Chrome-based web
+            browsers" (or whatever Eric says should be)" don't use previous text
+            about USD.
           </p>
         </div>
       </div>
