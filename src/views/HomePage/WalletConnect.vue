@@ -14,9 +14,8 @@
             style="width: 13px"
           />
           <p style="width: 350px; right: 0px">
-            "Currently we only support Metamask wallets on PC Chrome-based web
-            browsers" (or whatever Eric says should be)" don't use previous text
-            about USD.
+            Currently we only support Metamask wallets on PC Chrome-based web
+            browsers
           </p>
         </div>
       </div>
