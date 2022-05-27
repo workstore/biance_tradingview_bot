@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 // import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletConnect from "@walletconnect/client";
@@ -75,6 +75,8 @@ const chanidMsg = (id) =>
   `Unsupported chain id: ${Number(
     id
   )}. Supported chain ids are: ${Wallet_Target_ChainId}.`;
+const installUrl =
+  "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en";
 
 const isEqRinbeky = (value) => {
   return Number(value) === 4;
@@ -87,12 +89,12 @@ const clearMsg = () => {
 };
 
 const handleMask = async () => {
-  errorMsg.value = "";
+  // errorMsg.value = "";
   if (!isMetamaskInstalled) {
-    errorMsg.value = "No Ethereum provider was found on window.ethereum.";
+    window.open(installUrl, "_blank");
+    return;
   }
   const cnc = window.ethereum.isConnected();
-  // errorMsg.value = "No Ethereum provider was found on window.ethereum.";
   if (!cnc) {
     // connect first
     try {
@@ -184,6 +186,11 @@ const handleWallet = async () => {
 //   errorMsgl.value =
 //     "U2F browser support is needed for Ledger. Please use Chrome, Opera or Firefox with a U2F extension. Also make sure you're on an HTTPS connection";
 // };
+onMounted(async () => {
+  if (!isMetamaskInstalled) {
+    errorMsg.value = "Only Metamask Supported For Now, Click to install.";
+  }
+});
 </script>
 
 <style lang="scss" scoped>
