@@ -32,6 +32,9 @@ export default defineConfig({
   },
   server: {
     cors: true,
+    proxy: {
+      "/email": "http://localhost:4000",
+    },
   },
   preview: {
     port: 8080,

@@ -69,11 +69,11 @@
 <script setup>
 import { useI18n } from "vue-i18n";
 import { ref, onMounted, computed, onBeforeMount } from "vue";
-import WalletConnect from "@/views/HomePage/WalletConnect.vue";
-import NFTForm from "@/views/HomePage/NFTForm.vue";
-import Operation from "@/views/HomePage/Operation.vue";
+import WalletConnect from "@/views/NFTForm/WalletConnect.vue";
 import { useProviderFormStore } from "@/store/index";
 import { useCssVar } from "@vueuse/core";
+import NFTForm from "@/views/NFTForm/NFTForm.vue";
+import Operation from "@/views/NFTForm/Operation.vue";
 
 const el = ref(null);
 const color = useCssVar("--el-color-primary", el);

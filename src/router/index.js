@@ -3,8 +3,14 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: () => import("@/views/HomePage/HomeIndex.vue"),
+    name: "Entry",
+    component: () => import("@/views/Entry/index.vue"),
+  },
+  {
+    path: "/form",
+    name: "NFTForm",
+    component: () => import("@/views/NFTForm/HomeIndex.vue"),
+    props: (route) => ({ query: route.query.email }),
   },
   {
     path: "/:pathMatch(.*)",

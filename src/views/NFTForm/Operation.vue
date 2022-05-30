@@ -51,12 +51,16 @@ import threeDXAbi from "@/api/ThreeDX.json";
 import { useFormStore } from "@/store/index";
 import { onMounted, ref } from "vue";
 import { ThreeDX_Contract_Address } from "@/utils/globalConfig.json";
-// import { ElMessage } from "element-plus";
+import { saveEmail } from "@/api/form";
+import { useRoute } from "vue-router";
+
+const { query } = useRoute();
 
 const { imageHash, wallet, updateMinted } = useFormStore();
 
 const checked = ref(false);
 
+// TODO
 const mint = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
@@ -83,6 +87,14 @@ const handleCallContract = async () => {
   if (validateForm()) {
     try {
       const res = await mint();
+      // save
+      const { email } = query;
+      const body = {
+        address: email,
+        imageHash: imageHash.value,
+      };
+      const code = await saveEmail(body);
+      console.log("debug mmmm", useRoute(), body, code);
       ElMessage({
         message: "Success!",
         type: "success",
