@@ -187,6 +187,11 @@
           "internalType": "string",
           "name": "image",
           "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "royalty",
+          "type": "string"
         }
       ],
       "name": "mint",

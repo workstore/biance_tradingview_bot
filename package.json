@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev:stage": "vite --host --mode stage",
-    "dev:main": "vite --host --mode main",
+    "dev": "vite --host --mode main",
     "build:stage": "vue-tsc --noEmit && vite build --mode stage",
     "build": "vue-tsc --noEmit && vite build --mode main",
     "preview": "vite preview --host",
