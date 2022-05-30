@@ -53,6 +53,7 @@ import { onMounted, ref } from "vue";
 import { ThreeDX_Contract_Address } from "@/utils/globalConfig.json";
 import { saveEmail } from "@/api/form";
 import { useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
 
 const { query } = useRoute();
 
@@ -94,7 +95,6 @@ const handleCallContract = async () => {
         imageHash: imageHash.value,
       };
       const code = await saveEmail(body);
-      console.log("debug mmmm", useRoute(), body, code);
       ElMessage({
         message: "Success!",
         type: "success",

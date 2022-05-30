@@ -207,6 +207,7 @@ import {
   PINATA_SECRET_KEY,
   PINATA_UPLOAD,
 } from "@/utils/globalConfig.json";
+import { ElMessage } from "element-plus";
 
 const { updateHash, minted, updateMinted } = useFormStore();
 

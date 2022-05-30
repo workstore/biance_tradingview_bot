@@ -19,7 +19,7 @@
         The information will only be shared with POD 3DShuttle
       </div>
       <ElFormItem>
-        <ElButton @click="passEmail(formRef)">Continue</ElButton>
+        <ElButton @click="passEmail()">Continue</ElButton>
       </ElFormItem>
     </ElForm>
   </div>
@@ -27,8 +27,8 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 // import type { Ref } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
-import { useRouter, useRoute } from "vue-router";
+import { ElMessage, FormInstance, FormRules } from "element-plus";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -49,7 +49,7 @@ const validateEmail = (email: string) => {
 
 const email = ref<string>("test");
 
-const passEmail = (ref: any): void => {
+const passEmail = (): void => {
   if (validateEmail(formLabelAlign.email)) {
     router.push({
       name: "NFTForm",
