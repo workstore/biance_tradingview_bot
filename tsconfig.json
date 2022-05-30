@@ -26,7 +26,9 @@
     "src/router/index.js",
     "src/main.js",
     "src/i18n.js",
-    "src/store/index.js"
+    "src/store/index.js",
+    "src/utils/request.js",
+    "src/api/form.js"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

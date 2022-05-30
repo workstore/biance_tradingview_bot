@@ -28,6 +28,10 @@ export default defineConfig({
     },
     commonjsOptions: {
       transformMixedEsModules: true,
+      exclude: [
+        "node_modules/lodash-es/**",
+        "node_modules/@types/lodash-es/**",
+      ],
     },
   },
   server: {

@@ -27,14 +27,11 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 // import type { Ref } from "vue";
-import { ElMessage, FormInstance, FormRules } from "element-plus";
+import { ElMessage } from "element-plus";
+import type { FormInstance, FormRules } from "element-plus";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-// interface Form {
-//   email: Ref<string>;
-// }
 
 const formRef = ref<FormInstance>();
 
@@ -47,7 +44,7 @@ const validateEmail = (email: string) => {
   return pattern.test(email);
 };
 
-const email = ref<string>("test");
+const email = ref<string>("");
 
 const passEmail = (): void => {
   if (validateEmail(formLabelAlign.email)) {
