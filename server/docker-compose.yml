@@ -14,8 +14,8 @@ services:
     ports:
       - 27017:27017
     restart: always
-    # volumes:
-    #   - ./src/db:/app/db
+    volumes:
+      - ./src/db:/app/db
     networks:
       - webapp-network
     environment:
