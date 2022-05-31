@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://super:3dx@localhost:27017/')
-mongoose.Promise = global.Promise
+const mongoose = require("mongoose");
+mongoose.connect(`mongodb://super:3dx@database:27017/admin`);
+mongoose.Promise = global.Promise;
 
-const log = console.log.bind(console)
+const log = console.log.bind(console);
 
 // const main = () => {
 //     const EmailSchema = mongoose.Schema({
@@ -31,7 +31,7 @@ const log = console.log.bind(console)
 //     })
 // }
 
-const db = mongoose.connection
+const db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'connection error:'))
 // db.once('open', async () => {
 //   try {
@@ -42,4 +42,4 @@ const db = mongoose.connection
 //   }
 // })
 
-module.exports = db
+module.exports = db;

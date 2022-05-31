@@ -1,5 +1,7 @@
-sudo yarn build
-cp -r dist ./server/static
+# sudo yarn build
+git pull
+sudo npm run build
+sudo rm -rf ./server/dist
+cp -rf dist ./server
 cd ./server
-docker build -t 3dx_app .
-docker-compose up
+docker-compose up -d --force-recreate --no-deps --build

@@ -10,6 +10,7 @@
       label-width="120px"
       class="email-form"
       size="large"
+      @submit.native.prevent
     >
       <ElFormItem label="Email" prop="email">
         <ElInput
@@ -78,12 +79,11 @@ const passEmail = async (formEle: any) => {
     return;
   }
   await formEle.validate((valid: boolean) => {
-    console.log("debug valid", valid);
     if (valid) {
       router.push({
         name: "NFTForm",
         query: {
-          email: encodeURIComponent(formLabelAlign.email),
+          email: formLabelAlign.email,
         },
       });
     } else {
@@ -135,7 +135,7 @@ const passEmail = async (formEle: any) => {
   margin-top: 6px;
   text-align: left;
   position: relative;
-  top: -16px;
+  top: 6px;
 }
 
 .email-button {

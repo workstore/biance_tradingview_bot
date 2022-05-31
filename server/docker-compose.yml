@@ -14,14 +14,14 @@ services:
     ports:
       - 27017:27017
     restart: always
-    volumes:
-      - ./src/db:/app/db
+    # volumes:
+    #   - ./src/db:/app/db
     networks:
       - webapp-network
     environment:
       - MONGO_INITDB_ROOT_USERNAME=super # 默认开启授权，并创建超管用户 mongo -u godis -p godis@admin --authenticationDatabase admin
       - MONGO_INITDB_ROOT_PASSWORD=3dx # 超管密码，敏感数据也可以使用 `secrets`，不赘述。
-      - MONGO_INITDB_DATABASE=3dx # *.js 中默认的数据库
+      - MONGO_INITDB_DATABASE=admin # *.js 中默认的数据库
 networks:
   webapp-network:
     driver: bridge

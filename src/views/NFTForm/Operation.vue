@@ -90,7 +90,7 @@ const handleCallContract = async () => {
       // save
       const { email } = query;
       const body = {
-        address: email,
+        address: decodeURIComponent(email),
         imageHash: imageHash.value,
       };
       const code = await saveEmail(body);
@@ -105,21 +105,7 @@ const handleCallContract = async () => {
   }
 };
 
-onMounted(() => {
-  // const tokenId = 11;
-  // const roya = 13;
-  // const image = "0xhash123";
-  // console.log(
-  //   "denbug json",
-  //   '{"name":"3dx #',
-  //   tokenId.toString(),
-  //   '","description":"generate by 3dx","image":"ipfs://',
-  //   image,
-  //   '", "royalty":',
-  //   roya.toString(),
-  //   ',"model":"xxx"}'
-  // );
-});
+onMounted(() => {});
 </script>
 <style lang="scss" scoped>
 .disable {
