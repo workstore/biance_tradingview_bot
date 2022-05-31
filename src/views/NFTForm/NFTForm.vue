@@ -200,7 +200,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, reactive, watch, computed } from "vue";
+import { onMounted, toRef, ref, reactive, watch, computed } from "vue";
 import { useFormStore } from "@/store/index";
 import {
   PINATA_KEY,
@@ -209,7 +209,15 @@ import {
 } from "@/utils/globalConfig.json";
 import { ElMessage } from "element-plus";
 
-const { updateHash, minted, updateMinted } = useFormStore();
+const props = defineProps({
+  royalty: {
+    type: Number,
+  },
+});
+
+const royalty = toRef(props, "royalty");
+
+const { updateHash, minted, updateMinted, updateRoyalty } = useFormStore();
 
 const uploadRef = ref(null);
 const headers = reactive({
@@ -220,6 +228,13 @@ const headers = reactive({
 const thumbnail = ref("");
 const fileName = ref("file name");
 const percentage = ref(30);
+
+watch(
+  () => royalty.value,
+  (curr) => {
+    updateRoyalty(curr);
+  }
+);
 
 const handleProgress = (e, file) => {
   updateMinted(true);

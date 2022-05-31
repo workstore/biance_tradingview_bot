@@ -57,7 +57,7 @@ import { ElMessage } from "element-plus";
 
 const { query } = useRoute();
 
-const { imageHash, wallet, updateMinted } = useFormStore();
+const { imageHash, wallet, updateMinted, royalty } = useFormStore();
 
 const checked = ref(false);
 
@@ -70,8 +70,7 @@ const mint = async () => {
     threeDXAbi.abi,
     provider
   ).connect(signer);
-  const image = imageHash.value;
-  const tx = await threeDXContact.mint(image);
+  const tx = await threeDXContact.mint(imageHash.value, royalty.value);
   tx.wait();
 };
 
@@ -106,7 +105,21 @@ const handleCallContract = async () => {
   }
 };
 
-onMounted(() => {});
+onMounted(() => {
+  // const tokenId = 11;
+  // const roya = 13;
+  // const image = "0xhash123";
+  // console.log(
+  //   "denbug json",
+  //   '{"name":"3dx #',
+  //   tokenId.toString(),
+  //   '","description":"generate by 3dx","image":"ipfs://',
+  //   image,
+  //   '", "royalty":',
+  //   roya.toString(),
+  //   ',"model":"xxx"}'
+  // );
+});
 </script>
 <style lang="scss" scoped>
 .disable {

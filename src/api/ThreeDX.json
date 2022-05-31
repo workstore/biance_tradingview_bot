@@ -189,9 +189,9 @@
           "type": "string"
         },
         {
-          "internalType": "string",
+          "internalType": "uint256",
           "name": "royalty",
-          "type": "string"
+          "type": "uint256"
         }
       ],
       "name": "mint",

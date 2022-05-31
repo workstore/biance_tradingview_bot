@@ -4,11 +4,13 @@ import { createGlobalState, useSessionStorage } from "@vueuse/core";
 import { createInjectionState } from "@vueuse/shared";
 
 const [useProviderFormStore, useFormStore] = createInjectionState(
-  (IpfsHash, address) => {
+  (IpfsHash, address, progress) => {
     // state
     const imageHash = ref(IpfsHash || "");
 
     const wallet = ref(address || "");
+
+    const royalty = ref(progress || 20);
 
     // loading
     const minted = ref(false);
@@ -25,6 +27,10 @@ const [useProviderFormStore, useFormStore] = createInjectionState(
       minted.value = bool;
     };
 
+    const updateRoyalty = (num) => {
+      royalty.value = num;
+    };
+
     return {
       imageHash,
       wallet,
@@ -32,6 +38,8 @@ const [useProviderFormStore, useFormStore] = createInjectionState(
       updateWallet,
       minted,
       updateMinted,
+      royalty,
+      updateRoyalty,
     };
   }
 );

@@ -8,7 +8,7 @@
           class="line-devider line-devider--big-gutter"
           style="margin-bottom: 20px"
         ></div>
-        <NFTForm></NFTForm>
+        <NFTForm :royalty="progress"></NFTForm>
         <div
           class="line-devider line-devider--big-gutter"
           style="margin-bottom: 20px"
@@ -68,7 +68,7 @@
 
 <script setup>
 import { useI18n } from "vue-i18n";
-import { ref, onMounted, computed, onBeforeMount } from "vue";
+import { ref, watch, computed, onBeforeMount } from "vue";
 import WalletConnect from "@/views/NFTForm/WalletConnect.vue";
 import { useProviderFormStore } from "@/store/index";
 import { useCssVar } from "@vueuse/core";

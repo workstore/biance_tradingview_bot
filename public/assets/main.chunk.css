@@ -5329,15 +5329,14 @@ a {
 }
 @font-face {
   font-family: "ABC Whyte Inktrap Regular";
-  src: url(/static/media/ABCWhyteInktrap-Regular.6847835f.otf)
-    format("opentype");
+  src: url(/fonts/WhyteInktrap-Regular.otf) format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "ABC Whyte Book";
-  src: url(/fonts/ABCWhyte-Book.97eea20c.otf) format("opentype");
+  src: url(/fonts/ABCWhyte-Book.otf) format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
