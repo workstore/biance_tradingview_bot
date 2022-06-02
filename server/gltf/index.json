@@ -1,0 +1,134 @@
+{
+  "assets": [
+    {
+      "filePath": "assets/BoomBox/glTF-Draco/BoomBox.gltf",
+      "name": "Boom Box",
+      "description": "draco",
+      "creator": "Microsoft",
+      "creatorUrl": "https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/BoomBox"
+    },
+    {
+      "filePath": "assets/CesiumMan/glTF-Embedded/CesiumMan.gltf",
+      "name": "Cesium Man",
+      "description": "embedded"
+    },
+    {
+      "filePath": "assets/DamagedHelmet/glTF-Embedded/DamagedHelmet.gltf",
+      "name": "Damaged Helmet",
+      "description": "embedded",
+      "creator": "theblueturtle_",
+      "creatorUrl": "https://sketchfab.com/theblueturtle_"
+    },
+    {
+      "filePath": "assets/Datsun280ZX/glTF/Datsun280ZX.gltf",
+      "name": "Datsun 280ZX",
+      "description": "unpacked",
+      "creator": "ｍononofu",
+      "creatorUrl": "https://sketchfab.com/guest248"
+    },
+    {
+      "filePath": "assets/ExtensionsTest/glTF/Cube.gltf",
+      "name": "Extensions Test",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/FlightHelmet/glTF-Binary/FlightHelmet.glb",
+      "name": "Flight Helmet",
+      "description": "binary",
+      "creator": "Microsoft",
+      "creatorUrl": "https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/FlightHelmet"
+    },
+    {
+      "filePath": "assets/HdriBackdropTest/glTF/AntiqueCameraWithBackdrop.gltf",
+      "name": "HdriBackdrop Test (Antique Camera)",
+      "description": "unpacked",
+      "creator": "Maximilian Kamps",
+      "creatorUrl": "https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/AntiqueCamera"
+    },
+    {
+      "filePath": "assets/HotspotTest/glTF/InterpolationTest.gltf",
+      "name": "Hotspot Test",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/InterpolationTest/glTF/InterpolationTest.gltf",
+      "name": "Interpolation Test",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/InterpolationTestWithMeshReuse/glTF/InterpolationTest.gltf",
+      "name": "Interpolation Test With Mesh Reuse",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/LightIntensity/glTF/LightIntensity.gltf",
+      "name": "Light intensity",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/LightmapTest/glTF/SimpleBaked.gltf",
+      "name": "Lightmap Test",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/LightsAndCameras/glTF/LightsAndCameras.gltf",
+      "name": "Lights and Cameras",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf",
+      "name": "Materials Variants Shoe",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/MazdaMX5/glTF/MazdaMX5.gltf",
+      "name": "Mazda MX-5",
+      "description": "unpacked",
+      "creator": "Indians",
+      "creatorUrl": "https://sketchfab.com/Indians"
+    },
+    {
+      "filePath": "assets/MultiSkin/glTF-Embedded/MultiSkin.gltf",
+      "name": "Multi Skin",
+      "description": "embedded"
+    },
+    {
+      "filePath": "assets/RiggedSimple/glTF-Embedded/RiggedSimple.gltf",
+      "name": "Rigged Simple",
+      "description": "embedded"
+    },
+    {
+      "filePath": "assets/SkySphereTest/glTF/SkySpheres.gltf",
+      "name": "SkySphere Test",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/VariantSetTest/glTF/InterpolationTest.gltf",
+      "name": "Variant Set Test",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/VariantSetTestMultiLevel/glTF/InterpolationTest.gltf",
+      "name": "Variant Set Test Multi Level",
+      "description": "unpacked"
+    },
+    {
+      "filePath": "assets/ZIS101A/glTF/ZIS101A.gltf",
+      "name": "ZIS-101A Sport (1938)",
+      "description": "unpacked",
+      "creator": "Comrade1280",
+      "creatorUrl": "https://sketchfab.com/comrade1280"
+    }
+  ],
+  "topbar": true,
+  "sidebar": true,
+  "cameras": true,
+  "dragAndDrop": true,
+  "topbarTitle": "Unreal glTF Viewer",
+  "topbarLogoUrl": "viewer/logo.svg",
+  "theme": {
+    "palette": {
+      "primary": "#3393FA"
+    }
+  }
+}

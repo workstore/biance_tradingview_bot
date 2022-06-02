@@ -99,13 +99,14 @@ const handleCallContract = async () => {
         type: "success",
       });
       updateMinted(false);
+      setTimeout(() => {
+        window.location.href = "/gltf";
+      }, 3500);
     } catch (error) {
       console.log("debug error", error);
     }
   }
 };
-
-onMounted(() => {});
 </script>
 <style lang="scss" scoped>
 .disable {
