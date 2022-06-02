@@ -99,9 +99,9 @@ const handleCallContract = async () => {
         type: "success",
       });
       updateMinted(false);
-      setTimeout(() => {
-        window.location.href = "/gltf";
-      }, 3500);
+      // setTimeout(() => {
+      //   window.location.href = "/gltf";
+      // }, 3500);
     } catch (error) {
       console.log("debug error", error);
     }
