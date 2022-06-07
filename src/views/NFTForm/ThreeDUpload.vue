@@ -116,7 +116,6 @@ import {
   PINATA_UPLOAD,
 } from "@/utils/globalConfig.json";
 import { ElMessage } from "element-plus";
-import basePathConverter from "base-path-converter";
 
 const { updateThreeDHash, threeDHash } = useFormStore();
 
