@@ -45,14 +45,14 @@
         ><span style="color: red"></span>
       </div>
     </div>
-    <div class="label-input">
-      <h3 class="file-desc-title">
-        Upload a Avatar of 3D file for your 3DShuttle NFT File
-      </h3>
-      <p class="file-desc-text"></p>
-    </div>
-    <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
   </div>
+  <div class="label-input">
+    <h3 class="file-desc-title">
+      Upload a Avatar of 3D file for your 3DShuttle NFT File
+    </h3>
+    <p class="file-desc-text"></p>
+  </div>
+  <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
   <ElUpload
     v-show="!minted"
     ref="uploadRef"
@@ -67,7 +67,7 @@
     :on-error="handleError"
   >
     <template #trigger>
-      <label class="custom-file-upload" tabindex="0">
+      <label class="custom-file-upload marginbt20" tabindex="0">
         <div class="custom-fiile-content-container">
           <img
             class="custom-file-icon"
@@ -82,9 +82,10 @@
       </label>
     </template>
   </ElUpload>
-  <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
-  <!--  -->
-  <ThreeDUpload />
+  <p
+    v-if="!minted"
+    style="font-size: 14px; z-index: 0; padding-bottom: 20px"
+  ></p>
   <!--  -->
   <div v-if="minted" class="custom-file-upload">
     <div
@@ -154,6 +155,8 @@
       </div>
     </div>
   </div>
+  <!--  -->
+  <ThreeDUpload />
   <!--  -->
   <div
     class="line-devider line-devider--big-gutter"
@@ -298,5 +301,8 @@ const handleResetfile = async () => {
 
 .upload-status-bar {
   height: 24px;
+}
+.marginbt20 {
+  margin-bottom: 20px;
 }
 </style>

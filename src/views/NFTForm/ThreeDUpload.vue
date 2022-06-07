@@ -108,7 +108,7 @@
 </template>
 
 <script setup>
-import { onMounted, toRef, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useFormStore } from "@/store/index";
 import {
   PINATA_KEY,
@@ -128,8 +128,6 @@ const headers = {
 const fileName = ref("file name");
 const percentage = ref(30);
 const minted = ref(false);
-
-const testFolder = ref("./3dShuttle");
 const options = {
   wrapWithDirectory: true,
 };
@@ -140,18 +138,14 @@ const updateMinted = (bool) => {
 
 const handleProgress = (e, file) => {
   updateMinted(true);
-  // const { percent, loaded, total } = e;
   const { name, percentage: per, size, raw } = file;
   fileName.value = name;
   percentage.value = per;
-  // thumbnail.value = URL.createObjectURL(raw);
-  //
-  // const r = basePathConverter(testFolder.value, file);
   // console.log("debug handleProgress ", e, file);
 };
 
 const handleSuccess = (response, file) => {
-  const { IpfsHash, PinSize, Timestamp } = response;
+  const { IpfsHash } = response;
   const {
     name,
     percentage: per,
@@ -182,13 +176,14 @@ const handleBefore = (file) => {
   ) {
     return false;
   }
+  updateMinted(true);
   return true;
 };
 
-const handleResetfile = async () => {
-  // updateMinted(false);
-  // updateHash("");
-};
+// const handleResetfile = async () => {
+//   // updateMinted(false);
+//   // updateHash("");
+// };
 
 // const handleRequest = async (ops) => {
 //   console.log("debug handleRequest", ops);
@@ -202,6 +197,5 @@ onMounted(() => {
   const input = loader.children[0].querySelector("input");
   input.webkitdirectory = true;
   // console.log("debug file", uploadRef.value, loader, input);
-  // uploadRef.value.load_5.$children[0].$refs.input.webkitdirectory;
 });
 </script>
