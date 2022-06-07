@@ -58,34 +58,36 @@ import { pinJSONToIPFS } from "@/api/ipfs";
 
 const { query } = useRoute();
 
-const { imageHash, wallet, updateMinted, royalty } = useFormStore();
+const { imageHash, wallet, updateMinted, royalty, threeDHash } = useFormStore();
 
 const checked = ref(false);
 
-const mintPayload = (name, gltfHash, gltfName) => {
+const mintPayload = (name, gltfHash, gltfName = "") => {
   const p = {
     name,
     description: "generate by 3dx",
     image: `ipfs://${imageHash.value}`,
-    animation_url: `ipfs://${gltfHash}/${gltfName}`,
+    // animation_url: `ipfs://${gltfHash}/${gltfName}`,
+    animation_url: `ipfs://${gltfHash}`,
     royalty: royalty.value,
     model: "xxx",
   };
-  return JSON.stringify(p);
+  // console.log("debug mintPayload ", gltfHash, p);
+  return p;
 };
 
 // TODO
 const mint = async (jsonHash) => {
   try {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const threeDXContact = new ethers.Contract(
-    ThreeDX_Contract_Address,
-    threeDXAbi.abi,
-    provider
-  ).connect(signer);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const threeDXContact = new ethers.Contract(
+      ThreeDX_Contract_Address,
+      threeDXAbi.abi,
+      provider
+    ).connect(signer);
     const tx = await threeDXContact.mint(jsonHash);
-  tx.wait();
+    tx.wait();
   } catch (error) {
     console.log("debug mint error", error);
   }
@@ -103,7 +105,16 @@ const validateForm = () => {
 const handleCallContract = async () => {
   if (validateForm()) {
     try {
-      const res = await mint();
+      const name = "3dx";
+      // const hash = "QmZeqUcuMcPeZjL8PzLvVeBXjEWxmCPRLQWXhjoB48xGus";
+      // const fname = "skeleton-knight.gltf";
+      // const hash = "QmavZioXik2rdjz7z4bBkj1cWjKVwxBPcNwsK3i3WaMbRz";
+      // const fname = "t2.gltf";
+      const hash = threeDHash.value;
+      const p = mintPayload(name, hash);
+      const h = await pinJSONToIPFS(p);
+      const res = await mint(h);
+      // console.log(threeDHash.value, hash, p);
       // save
       const { email } = query;
       const body = {

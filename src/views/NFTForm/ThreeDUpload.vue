@@ -1,63 +1,19 @@
 <template>
-  <div>
-    <div>
-      <div style="display: flex">
-        <label class="label-input">Creator</label>
-      </div>
-      <input
-        name="creator"
-        aria-invalid="false"
-        class="input-field"
-        placeholder="Enter the name or pseudonym of the creator"
-      /><span style="color: red"></span>
-    </div>
-    <div
-      class="line-devider line-devider--big-gutter"
-      style="margin-bottom: 20px"
-    ></div>
-    <div class="form-header-section">
-      <h2 class="form-header-title">3DShuttle NFT Details</h2>
-      <p style="font-size: 14px; z-index: 0">
-        This information will be visible on marketplaces.
-      </p>
-    </div>
-    <div style="padding-bottom: 20px">
-      <div style="display: flex"><label class="label-input">Title</label></div>
-      <input
-        name="title"
-        aria-invalid="false"
-        class="input-field"
-        placeholder="Enter the NFT title"
-      /><span style="color: red"></span>
-    </div>
-    <div style="padding-bottom: 20px">
-      <div>
-        <div style="display: flex">
-          <label class="label-input">Description</label>
-        </div>
-        <textarea
-          name="description"
-          aria-invalid="false"
-          class="text-area-field"
-          placeholder="Enter the NFT description"
-          type="textfield"
-        ></textarea
-        ><span style="color: red"></span>
-      </div>
-    </div>
-    <div class="label-input">
-      <h3 class="file-desc-title">
-        Upload a Avatar of 3D file for your 3DShuttle NFT File
-      </h3>
-      <p class="file-desc-text"></p>
-    </div>
-    <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
+  <div class="label-input">
+    <h3 class="file-desc-title">
+      Upload a 3D file for your 3DShuttle NFT File
+    </h3>
+    <p class="file-desc-text"></p>
   </div>
+  <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
   <ElUpload
     v-show="!minted"
+    id="3d-file"
     ref="uploadRef"
+    accept=".glb,.fbx,.usd,.gltf"
     drag
     class="upload-demo"
+    multiple
     :action="PINATA_UPLOAD"
     :auto-upload="true"
     :show-file-list="false"
@@ -65,6 +21,8 @@
     :on-progress="handleProgress"
     :on-success="handleSuccess"
     :on-error="handleError"
+    :before-upload="handleBefore"
+    :data="options"
   >
     <template #trigger>
       <label class="custom-file-upload" tabindex="0">
@@ -82,18 +40,11 @@
       </label>
     </template>
   </ElUpload>
-  <p style="font-size: 14px; z-index: 0; padding-bottom: 20px"></p>
-  <!--  -->
-  <ThreeDUpload />
-  <!--  -->
   <div v-if="minted" class="custom-file-upload">
     <div
       style="display: flex; justify-content: space-between; align-items: center"
     >
       <div style="display: flex; align-items: center">
-        <div class="file-thumbnail-image-container">
-          <img class="file-thumbnail-img" :src="thumbnail" alt="img" />
-        </div>
         <span class="file-thumbnail-title"
           ><p>{{ fileName }}</p></span
         >
@@ -154,55 +105,10 @@
       </div>
     </div>
   </div>
-  <!--  -->
-  <div
-    class="line-devider line-devider--big-gutter"
-    style="margin-bottom: 20px"
-  ></div>
-  <div style="padding-bottom: 20px">
-    <div style="display: flex">
-      <label class="label-input">Smart Contract Name</label>
-      <div class="buble">
-        <img
-          id="question-mark"
-          src="../../assets/images/question.svg"
-          alt="Placeholder text"
-        />
-        <p>The smart contract name will be the name of your collection</p>
-      </div>
-    </div>
-    <input
-      name="collectionName"
-      aria-invalid="false"
-      class="input-field"
-      placeholder="Enter the smart contract name for your NFT"
-    /><span style="color: red"></span>
-  </div>
-  <div>
-    <div style="display: flex">
-      <label class="label-input">Smart contract symbol</label>
-      <div class="buble">
-        <img
-          id="question-mark"
-          src="../../assets/images/question.svg"
-          alt="Placeholder text"
-        />
-        <p>
-          Use a custom symbol on your smart contract for Token Trackers to
-          display on transaction
-        </p>
-      </div>
-    </div>
-    <input
-      name="collectionSymbol"
-      aria-invalid="false"
-      class="input-field"
-      placeholder="Enter the smart contract symbol for your NFT"
-    /><span style="color: red"></span>
-  </div>
 </template>
+
 <script setup>
-import { onMounted, toRef, ref, reactive, watch, computed } from "vue";
+import { onMounted, toRef, ref } from "vue";
 import { useFormStore } from "@/store/index";
 import {
   PINATA_KEY,
@@ -210,34 +116,28 @@ import {
   PINATA_UPLOAD,
 } from "@/utils/globalConfig.json";
 import { ElMessage } from "element-plus";
-import ThreeDUpload from "./ThreeDUpload.vue";
+import basePathConverter from "base-path-converter";
 
-const props = defineProps({
-  royalty: {
-    type: Number,
-  },
-});
-
-const royalty = toRef(props, "royalty");
-
-const { updateHash, minted, updateMinted, updateRoyalty } = useFormStore();
+const { updateThreeDHash, threeDHash } = useFormStore();
 
 const uploadRef = ref(null);
-const headers = reactive({
+const headers = {
   pinata_api_key: PINATA_KEY,
   pinata_secret_api_key: PINATA_SECRET_KEY,
-});
-// upload
-const thumbnail = ref("");
+};
+
 const fileName = ref("file name");
 const percentage = ref(30);
+const minted = ref(false);
 
-watch(
-  () => royalty.value,
-  (curr) => {
-    updateRoyalty(curr);
-  }
-);
+const testFolder = ref("./3dShuttle");
+const options = {
+  wrapWithDirectory: true,
+};
+
+const updateMinted = (bool) => {
+  minted.value = bool;
+};
 
 const handleProgress = (e, file) => {
   updateMinted(true);
@@ -245,8 +145,9 @@ const handleProgress = (e, file) => {
   const { name, percentage: per, size, raw } = file;
   fileName.value = name;
   percentage.value = per;
-  thumbnail.value = URL.createObjectURL(raw);
+  // thumbnail.value = URL.createObjectURL(raw);
   //
+  // const r = basePathConverter(testFolder.value, file);
   // console.log("debug handleProgress ", e, file);
 };
 
@@ -260,8 +161,8 @@ const handleSuccess = (response, file) => {
   } = file;
   fileName.value = name;
   percentage.value = 100;
-  updateHash(IpfsHash);
-  // console.log("debug handleSuccess ", response, file);
+  updateThreeDHash(`${IpfsHash}/${name}`);
+  // console.log("debug handleSuccess ", threeDHash, IpfsHash, name, file);
 };
 
 const handleError = (error, files) => {
@@ -271,32 +172,37 @@ const handleError = (error, files) => {
   });
 };
 
-const handleBefore = (args) => {
-  // console.log("debug handleBefore", args);
-  updateMinted(true);
+const handleBefore = (file) => {
+  const { webkitRelativePath, name } = file;
+  // console.log("debug handleBefore", file);
+  if (
+    !name.includes(".glb") &&
+    !name.includes(".fbx") &&
+    !name.includes(".usd") &&
+    !name.includes(".gltf")
+  ) {
+    return false;
+  }
+  return true;
 };
 
 const handleResetfile = async () => {
-  updateMinted(false);
-  updateHash("");
-  thumbnail.value = "";
+  // updateMinted(false);
+  // updateHash("");
 };
+
+// const handleRequest = async (ops) => {
+//   console.log("debug handleRequest", ops);
+//   return new Promise((resolve, reject) => {
+//     resolve();
+//   });
+// };
+
+onMounted(() => {
+  const loader = document.getElementById("3d-file");
+  const input = loader.children[0].querySelector("input");
+  input.webkitdirectory = true;
+  // console.log("debug file", uploadRef.value, loader, input);
+  // uploadRef.value.load_5.$children[0].$refs.input.webkitdirectory;
+});
 </script>
-<style lang="scss">
-.upload-status-bar--container {
-  height: 60px;
-}
-
-.upload-demo .el-upload-dragger {
-  border: 0 none;
-  padding: 0;
-}
-
-.spiner-bar-container {
-  gap: 0.1rem;
-}
-
-.upload-status-bar {
-  height: 24px;
-}
-</style>
