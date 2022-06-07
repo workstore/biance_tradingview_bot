@@ -158,6 +158,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "getTokenId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -185,13 +198,8 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "image",
+          "name": "metadata",
           "type": "string"
-        },
-        {
-          "internalType": "uint256",
-          "name": "royalty",
-          "type": "uint256"
         }
       ],
       "name": "mint",

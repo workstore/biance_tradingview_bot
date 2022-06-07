@@ -54,6 +54,7 @@ import { ThreeDX_Contract_Address } from "@/utils/globalConfig.json";
 import { saveEmail } from "@/api/form";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
+import { pinJSONToIPFS } from "@/api/ipfs";
 
 const { query } = useRoute();
 
@@ -61,8 +62,21 @@ const { imageHash, wallet, updateMinted, royalty } = useFormStore();
 
 const checked = ref(false);
 
+const mintPayload = (name, gltfHash, gltfName) => {
+  const p = {
+    name,
+    description: "generate by 3dx",
+    image: `ipfs://${imageHash.value}`,
+    animation_url: `ipfs://${gltfHash}/${gltfName}`,
+    royalty: royalty.value,
+    model: "xxx",
+  };
+  return JSON.stringify(p);
+};
+
 // TODO
-const mint = async () => {
+const mint = async (jsonHash) => {
+  try {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const threeDXContact = new ethers.Contract(
@@ -70,8 +84,11 @@ const mint = async () => {
     threeDXAbi.abi,
     provider
   ).connect(signer);
-  const tx = await threeDXContact.mint(imageHash.value, royalty.value);
+    const tx = await threeDXContact.mint(jsonHash);
   tx.wait();
+  } catch (error) {
+    console.log("debug mint error", error);
+  }
 };
 
 const validateForm = () => {
