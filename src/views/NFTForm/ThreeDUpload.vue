@@ -126,7 +126,7 @@ const headers = {
 };
 
 const fileName = ref("file name");
-const percentage = ref(30);
+const percentage = ref(0);
 const minted = ref(false);
 const options = {
   wrapWithDirectory: true,

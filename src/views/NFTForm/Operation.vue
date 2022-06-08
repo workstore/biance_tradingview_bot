@@ -95,7 +95,12 @@ const mint = async (jsonHash) => {
 
 const validateForm = () => {
   let r = false;
-  if (!imageHash.value || !wallet.value || !window.ethereum) {
+  if (
+    !imageHash.value ||
+    !wallet.value ||
+    !window.ethereum ||
+    !threeDHash.value
+  ) {
     return r;
   }
   r = true;
