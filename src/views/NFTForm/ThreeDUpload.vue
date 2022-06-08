@@ -25,7 +25,7 @@
     :data="options"
   >
     <template #trigger>
-      <label class="custom-file-upload" tabindex="0">
+      <label class="custom-file-upload marginbt20" tabindex="0">
         <div class="custom-fiile-content-container">
           <img
             class="custom-file-icon"

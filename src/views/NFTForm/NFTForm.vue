@@ -67,7 +67,7 @@
     :on-error="handleError"
   >
     <template #trigger>
-      <label class="custom-file-upload marginbt20" tabindex="0">
+      <label class="custom-file-upload" tabindex="0">
         <div class="custom-fiile-content-container">
           <img
             class="custom-file-icon"
@@ -87,7 +87,7 @@
     style="font-size: 14px; z-index: 0; padding-bottom: 20px"
   ></p>
   <!--  -->
-  <div v-if="minted" class="custom-file-upload">
+  <div v-if="minted" class="custom-file-upload marginbt20">
     <div
       style="display: flex; justify-content: space-between; align-items: center"
     >
