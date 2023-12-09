@@ -3,7 +3,7 @@ const bot = express.Router();
 // const Email = require("../model/email");
 // const log = console.log.bind(console);
 
-bot.get("/pingbot", async (request, response) => {
+bot.get("/ping", async (request, response) => {
   try {
     response.status(200);
     response.send('running');
