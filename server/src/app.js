@@ -36,7 +36,7 @@ app.use("/gltf", express.static(path.join(__dirname, "../gltf")));
 const index = require("./routes");
 const bot = require('./routes/bot')
 
-app.use("/", index);
+// app.use("/", index);
 app.use('/bot', bot)
 
 // error handling middleware should be loaded after the loading the routes

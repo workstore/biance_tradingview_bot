@@ -1,8 +1,9 @@
 const express = require("express");
 const bot = express.Router();
 const log = console.log.bind(console);
+import BianceTradeBot from '../model/biance_bot'
 
-bot.get("/pingbot", async (request, response) => {
+bot.get("/ping", async (request, response) => {
     try {
         response.status(200);
         response.send('running');

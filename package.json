@@ -12,6 +12,7 @@
     "deploy": "sudo npm run build:main && pm2 start server/app.js --watch --no-daemon"
   },
   "dependencies": {
+    "@binance/connector": "^3.0.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
