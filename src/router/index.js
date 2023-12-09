@@ -7,6 +7,11 @@ const routes = [
     component: () => import("@/views/Entry/index.vue"),
   },
   {
+    path: 'bot-admin',
+    name: 'botAdmin',
+    component: () => import("@/views/Bot/admin.vue"),
+  },
+  {
     path: "/form",
     name: "NFTForm",
     component: () => import("@/views/NFTForm/HomeIndex.vue"),

@@ -1,35 +1,9 @@
 const mongoose = require("mongoose");
-mongoose.connect(`mongodb://super:3dx@database:27017/admin`);
+// mongoose.connect(`mongodb://super:makealotmoney@database:27017/admin`);
+mongoose.connect(`mongodb://localhost:27017/`);
 mongoose.Promise = global.Promise;
 
 const log = console.log.bind(console);
-
-// const main = () => {
-//     const EmailSchema = mongoose.Schema({
-//         address: String,
-//     })
-
-//     kittySchema.methods.speak = function() {
-//         const greeting = this.name ? `Meow name is ${this.name}` : "I don't have a name"
-//         log('greeting', greeting)
-//     }
-//     const Kitten = mongoose.model('Kitten', kittySchema)
-//     const silence = new Kitten({
-//         name: 'Silence'
-//     })
-
-//     const fluffy = new Kitten({
-//         name: 'fluffy',
-//     })
-//     log(silence.name)
-//     fluffy.speak()
-
-//     Kitten.findOne({
-//         name: 'p1',
-//     }).then((d) => {
-//         log('debug d', d)
-//     })
-// }
 
 const db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'connection error:'))
