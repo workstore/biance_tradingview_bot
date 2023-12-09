@@ -14,7 +14,7 @@ RUN npm install
 
 # 对外暴露端口
 EXPOSE 4000
-EXPOSE 8082
+EXPOSE 80
 
 # 启动 Image 时执行命令
 # CMD BUILD_ENV=docker node app.js
